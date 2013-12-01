@@ -9,11 +9,10 @@
 
     <!-- configuration for maven release plugin-->
     <scm>
-        <connection>scm:git:git://github.com/radiusintelligence/radius-api.git</connection>
-        <url>https://github.com/radiusintelligence/radius-api</url>
-        <developerConnection>scm:git:git://github.com/radiusintelligence/radius-api.git</developerConnection>
-      <tag>test-1.0.0</tag>
-  </scm>
+        <connection>scm:git:git://github.com/radiusintelligence/mvn-test.git</connection>
+        <url>https://github.com/radiusintelligence/mvn-test</url>
+        <developerConnection>scm:git:git://github.com/radiusintelligence/mvn-test.git</developerConnection>
+    </scm>
 
     <build>
         <resources>
