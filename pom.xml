@@ -9,9 +9,9 @@
 
     <!-- configuration for maven release plugin-->
     <scm>
-        <connection>scm:git:git://github.com/radiusintelligence/mvn-test.git</connection>
+        <connection>scm:git:ssh://github.com/radiusintelligence/mvn-test.git</connection>
         <url>https://github.com/radiusintelligence/mvn-test</url>
-        <developerConnection>scm:git:git://github.com/radiusintelligence/mvn-test.git</developerConnection>
+        <developerConnection>scm:git:ssh://github.com/radiusintelligence/mvn-test.git</developerConnection>
       <tag>test-1.0.0</tag>
   </scm>
 
