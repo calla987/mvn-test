@@ -3,7 +3,7 @@
 
     <groupId>com.radius</groupId>
     <artifactId>test</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>war</packaging>
     <name>Test of deployment packaging</name>
 
@@ -12,7 +12,8 @@
         <connection>scm:git:git://github.com/radiusintelligence/mvn-test.git</connection>
         <url>https://github.com/radiusintelligence/mvn-test</url>
         <developerConnection>scm:git:git://github.com/radiusintelligence/mvn-test.git</developerConnection>
-    </scm>
+      <tag>test-1.0.0</tag>
+  </scm>
 
     <build>
         <resources>
