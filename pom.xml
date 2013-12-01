@@ -1,0 +1,152 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.radius</groupId>
+    <artifactId>test</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>Test of deployment packaging</name>
+
+    <!-- configuration for maven release plugin-->
+    <scm>
+        <connection>scm:git:git://github.com/radiusintelligence/radius-api.git</connection>
+        <url>https://github.com/radiusintelligence/radius-api</url>
+        <developerConnection>scm:git:git://github.com/radiusintelligence/radius-api.git</developerConnection>
+    </scm>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <!--///////////////////////////////////////////-->
+            <!--//// JAVA COMPILER SETTINGS                -->
+            <!--///////////////////////////////////////////-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <compilerArgument>-Xlint:unchecked</compilerArgument>
+                    <debug>true</debug>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+
+            <!--///////////////////////////////////////////-->
+            <!--//// Test Execution SETTINGS             -->
+            <!--///////////////////////////////////////////-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.13</version>
+                <configuration>
+                    <!-- Jenkins has somehow picked up "testFailureIgnore=true" so put a stop to that -->
+                    <testFailureIgnore>false</testFailureIgnore>
+                </configuration>
+            </plugin>
+
+            <!--///////////////////////////////////////////-->
+            <!--//// MAVEN WAR PLUGIN                      -->
+            <!--///////////////////////////////////////////-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                    <warSourceExcludes>
+                        js/**
+                    </warSourceExcludes>
+                </configuration>
+            </plugin>
+
+            <!--///////////////////////////////////////////-->
+            <!--//// ATTACH SOURCES AND JAVADOC            -->
+            <!--///////////////////////////////////////////-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.0.4</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <!-- Restrict execution of source compilation to site -->
+                        <phase>site</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <quiet>true</quiet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <build.number>DEV</build.number>
+                <git.commit>cafebabe</git.commit>
+                <application.home>${project.basedir}</application.home>
+            </properties>
+        </profile>
+        <profile>
+            <!-- This profile is activated by an environment variable set by Jenkins. -->
+            <id>jenkins</id>
+            <activation>
+                <property>
+                    <name>env.BUILD_NUMBER</name>
+                </property>
+            </activation>
+            <properties>
+                <build.number>${env.BUILD_NUMBER}</build.number>
+                <git.commit>${env.GIT_COMMIT}</git.commit>
+            </properties>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <repository>
+            <id>com.radius.releases</id>
+            <name>releases</name>
+            <url>http://nexus.radiidevs.com/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>com.radius.snapshots</id>
+            <name>snapshots</name>
+            <url>http://nexus.radiidevs.com/nexus/content/repositories/snapshots/</url>
+            <!-- No point in keeping these around -->
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>
